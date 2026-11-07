@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Only Leah's verified Google account can read bookings.
+    // Replace with the email she signs in with (or remove the read rule and use the Firebase console).
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email == 'LEAH_EMAIL@gmail.com';
+    }
+
+    function validDate(d) { return d is string && d.matches('^20[0-9]{2}-[01][0-9]-[0-3][0-9]$'); }
+    function validTime(t) { return t is string && t.matches('^[0-2][0-9]:[0-5][0-9]$'); }
+
+    // Public availability: only date + time, nothing personal.
+    // Create-only: a slot that already exists cannot be overwritten, so double booking is impossible.
+    match /slots/{slotId} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['date','time','createdAt'])
+                    && validDate(request.resource.data.date)
+                    && validTime(request.resource.data.time)
+                    && slotId == request.resource.data.date + '_' + request.resource.data.time.replace(':', '')
+                    && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+
+    // Bookings: anyone can create one (and only together with its slot), only Leah can read them.
+    match /bookings/{bookingId} {
+      allow create: if request.resource.data.keys().hasOnly(
+                          ['service','date','time','name','whatsapp','instagram','niche','problem','status','createdAt'])
+                    && request.resource.data.service in ['audit','strategy','setup']
+                    && validDate(request.resource.data.date)
+                    && validTime(request.resource.data.time)
+                    && bookingId == request.resource.data.date + '_' + request.resource.data.time.replace(':', '')
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() >= 2 && request.resource.data.name.size() <= 80
+                    && request.resource.data.whatsapp is string
+                    && request.resource.data.whatsapp.matches('^[0-9]{10,15}$')
+                    && request.resource.data.instagram is string && request.resource.data.instagram.size() <= 60
+                    && request.resource.data.niche is string && request.resource.data.niche.size() <= 60
+                    && request.resource.data.problem is string && request.resource.data.problem.size() <= 600
+                    && request.resource.data.status == 'new'
+                    && request.resource.data.createdAt == request.time
+                    // the slot must be created in the same batch, which is what blocks duplicates
+                    && getAfter(/databases/$(database)/documents/slots/$(bookingId)).data.date == request.resource.data.date;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

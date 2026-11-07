@@ -1,0 +1,11 @@
+feat: add BizzConvert landing page with Firestore consultant booking
+
+- Single-file landing page in the BizzConvert navy/green brand (hero, problem,
+  services, process, about, CTA band, FAQ, floating WhatsApp button)
+- Booking flow: service > day > time > details, Nigeria-time (WAT) slots,
+  minimum-notice rule, WhatsApp confirmation link and .ics calendar download
+- Firestore storage: public create-only `slots` (blocks double booking via
+  atomic batch) and admin-only `bookings`; includes firestore.rules
+- Demo mode (localStorage) when Firebase config is not set
+- Honeypot field, input validation, textContent for user data
+- Add README with Firebase setup, deploy steps and go-live checklist
