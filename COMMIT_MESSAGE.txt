@@ -1,0 +1,17 @@
+feat: add admin dashboard, move config to .env, add business details to booking
+
+- Add /admin page: Firebase Auth email+password sign-in, password reset,
+  live bookings list with tabs, stats, search and CSV export
+- Show customer (name, WhatsApp, Instagram) and business (name, niche,
+  biggest problem) details per booking; status, private notes, call,
+  WhatsApp confirmation and cancel (cancelling frees the time slot)
+- Move site to Vite with index.html at project root; split script into
+  src modules; Firebase keys and contact details now come from .env
+- Add business name field to the booking form
+- Tighten firestore.rules: admin access by UID, admin may only change
+  status/notes, slots can only be created together with their booking
+- Add Leah's photo and contact details; update README with Firebase
+  setup and deploy steps
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_018LiG7Y1dzfCnx4CS8HrnrU

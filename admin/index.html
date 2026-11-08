@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B1B3A">
+<title>BizzConvert Admin</title>
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="demoBar" class="demo" hidden>Demo mode: Firebase keys not found in .env. Any email and password signs in, and you only see bookings made in this browser.</div>
+
+<!-- SIGN IN -->
+<section id="login" class="login" hidden>
+  <form id="loginForm" class="login-card" novalidate>
+    <img src="/img/logo-mark.png" alt="" width="64" height="64">
+    <h1>Admin sign in</h1>
+    <p class="sub">BizzConvert dashboard</p>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" inputmode="email" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <div class="pw">
+        <input id="password" type="password" autocomplete="current-password" required>
+        <button type="button" id="togglePw" aria-label="Show password">Show</button>
+      </div>
+    </div>
+    <div class="status" id="loginStatus" role="alert"></div>
+    <button class="btn btn-primary" id="loginBtn" type="submit">Sign in</button>
+    <button class="link" id="forgotBtn" type="button">Forgot password?</button>
+  </form>
+</section>
+
+<!-- DASHBOARD -->
+<div id="dash" hidden>
+  <header class="top">
+    <div class="wrap top-in">
+      <div class="brand"><img src="/img/logo-mark.png" alt="" width="34" height="34"><span>BizzConvert <b>Admin</b></span></div>
+      <div class="who"><span id="who"></span><button class="btn-sm" id="logoutBtn" type="button">Sign out</button></div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="stats" id="stats"></div>
+
+    <div class="toolbar">
+      <div class="tabs" id="tabs" role="tablist" aria-label="Booking filters"></div>
+      <div class="tools">
+        <input id="search" type="search" placeholder="Search name, business, phone…" aria-label="Search bookings">
+        <button class="btn-sm" id="csvBtn" type="button">Export CSV</button>
+      </div>
+    </div>
+
+    <div id="notice" class="notice" hidden></div>
+    <div id="list" class="list" aria-live="polite"></div>
+  </main>
+</div>
+
+<script type="module" src="/src/admin.js"></script>
+</body>
+</html>
