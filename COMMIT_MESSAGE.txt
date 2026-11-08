@@ -1,17 +1,16 @@
-feat: add admin dashboard, move config to .env, add business details to booking
+feat: redesign landing page with glass UI, SVG icons and motion
 
-- Add /admin page: Firebase Auth email+password sign-in, password reset,
-  live bookings list with tabs, stats, search and CSV export
-- Show customer (name, WhatsApp, Instagram) and business (name, niche,
-  biggest problem) details per booking; status, private notes, call,
-  WhatsApp confirmation and cancel (cancelling frees the time slot)
-- Move site to Vite with index.html at project root; split script into
-  src modules; Firebase keys and contact details now come from .env
-- Add business name field to the booking form
-- Tighten firestore.rules: admin access by UID, admin may only change
-  status/notes, slots can only be created together with their booking
-- Add Leah's photo and contact details; update README with Firebase
-  setup and deploy steps
+- Replace every emoji with inline SVG icons (single sprite, no icon library)
+- Glassmorphism panels over a drifting colour backdrop; Poppins throughout
+- Hero: line-by-line headline reveal and a chat that plays out
+  "price?" to "payment confirmed"
+- Floating glass nav with scroll progress bar and mobile menu
+- Problem, services, process, about, CTA and FAQ restyled; process line
+  draws on scroll; cursor-following light on glass cards
+- Booking form restyled (custom radios, select, date/time chips, animated
+  success tick); same field ids, no logic changes
+- Add src/fx.js for scroll/nav/menu effects; respects reduced motion
+- Footer contact links now carry icons
 
 Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_018LiG7Y1dzfCnx4CS8HrnrU

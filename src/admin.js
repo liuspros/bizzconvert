@@ -272,7 +272,8 @@ $("#list").addEventListener("click", async e => {
       show(false);
       setTimeout(() => { flash.delete(id); show(true); }, 2000);
     } else if (act === "cancel") {
-      if (confirm("Cancel this booking? The time slot will open up again for other customers.")) await cancelBooking(id);
+      const bk = bookings.find(x => x.id === id);
+      if (bk && confirm("Cancel this booking? The time slot will open up again for other customers.")) await cancelBooking(bk);
     }
   } catch (err) {
     console.error(err);

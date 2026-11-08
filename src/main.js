@@ -1,5 +1,6 @@
 import { SITE, BOOKING, SERVICES, DEMO } from "./config.js";
 import { getTaken, saveBooking, slotId } from "./store.js";
+import "./fx.js";
 import { TZ, lagosNow, addDays, dow, fmtDay, t12, cleanPhone, esc } from "./utils.js";
 
 const $ = s => document.querySelector(s);
@@ -143,14 +144,9 @@ function downloadIcs(b, s) {
 const waLink = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent("Hi BizzConvert! I'd like to know more.")}`;
 $("#waFloat").href = waLink; $("#footWa").href = waLink;
 if (SITE.instagram) { $("#footIg").href = SITE.instagram; $("#footIg").hidden = false; }
-if (SITE.phone) { $("#footPhone").href = `tel:${SITE.phone.replace(/\s/g, "")}`; $("#footPhone").textContent = SITE.phone; $("#footPhone").hidden = false; }
-if (SITE.email) { $("#footEmail").href = `mailto:${SITE.email}`; $("#footEmail").textContent = SITE.email; $("#footEmail").hidden = false; }
+if (SITE.phone) { $("#footPhone").href = `tel:${SITE.phone.replace(/\s/g, "")}`; $("#footPhone .t").textContent = SITE.phone; $("#footPhone").hidden = false; }
+if (SITE.email) { $("#footEmail").href = `mailto:${SITE.email}`; $("#footEmail .t").textContent = SITE.email; $("#footEmail").hidden = false; }
 $("#yr").textContent = new Date().getFullYear();
 document.querySelectorAll("[data-service]").forEach(a => a.addEventListener("click", () => pickService(a.dataset.service)));
 
 renderServices(); renderDates(); updateSummary();
-
-const io = "IntersectionObserver" in window
-  ? new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { threshold: .12 })
-  : null;
-document.querySelectorAll(".rv").forEach(el => (io ? io.observe(el) : el.classList.add("in")));
